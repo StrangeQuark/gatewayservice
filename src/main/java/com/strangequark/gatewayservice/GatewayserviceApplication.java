@@ -21,6 +21,11 @@ public class GatewayserviceApplication {
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://localhost:6001")
 				)
+				.route(r -> r.path("/email/**")
+						.filters(f -> f
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://localhost:6005")
+				)
 				.build();
 	}
 
