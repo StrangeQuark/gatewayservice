@@ -1,5 +1,6 @@
 package com.strangequark.gatewayservice;
 
+import com.strangequark.gatewayservice.filters.JwtAuthenticationFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -8,6 +9,12 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class GatewayserviceApplication {
+
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+	public GatewayserviceApplication(JwtAuthenticationFilter jwtAuthenticationFilter) {
+		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayserviceApplication.class, args);
@@ -18,6 +25,7 @@ public class GatewayserviceApplication {
 		return builder.routes()
 				.route(r -> r.path("/auth/**", "/access/**", "/user/**")
 						.filters(f -> f
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://localhost:6001")
 				)
