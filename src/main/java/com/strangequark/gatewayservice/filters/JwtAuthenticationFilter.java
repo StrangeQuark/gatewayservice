@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
 
-    @Value("${jwt.secret}")
+    @Value("${accessSecretKey}")
     private String secretKey;
 
     private final WebClient webClient;
@@ -60,6 +60,15 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
                 // Call JWT auth service to validate refresh token and get a new access token
                 String newAccessToken = AuthUtility.requestNewAccessToken(refreshToken);
+
+//                //Uncomment to return new token in cookie
+//                // Set the new access token in an HttpOnly cookie
+//                exchange.getResponse().addCookie(HttpCookie.builder("access_token", newAccessToken)
+//                        .httpOnly(true)
+//                        .secure(true)  // Ensure Secure flag is set (for HTTPS)
+//                        .sameSite("Strict") // For CSRF protection
+//                        .path("/")  // Path for the cookie
+//                        .build());
 
                 ServerWebExchange mutatedExchange = exchange.mutate()
                         .request(exchange.getRequest().mutate()
