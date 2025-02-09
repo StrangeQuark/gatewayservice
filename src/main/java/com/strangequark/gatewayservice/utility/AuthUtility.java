@@ -17,7 +17,7 @@ public class AuthUtility {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         String url = Boolean.parseBoolean(System.getenv("DOCKER_DEPLOYMENT")) ?
-                "http://auth-app:6001/access" : "http://localhost:6001/access";
+                "http://auth-service:6001/access" : "http://localhost:6001/access";
 
         // Make the GET request with the headers
         ResponseEntity<String> responseEntity = new RestTemplate().exchange(

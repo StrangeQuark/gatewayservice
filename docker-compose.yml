@@ -1,0 +1,16 @@
+version: '1.0.0'
+
+services:
+  gateway-service:
+    build: .
+    networks:
+      - shared-network
+    ports:
+      - "8080:8080"
+    container_name: gateway-service
+    environment:
+      - ACCESS_SECRET_KEY=${ACCESS_SECRET_KEY}
+      - DOCKER_DEPLOYMENT=true
+networks:
+  shared-network:
+    external: true
