@@ -23,22 +23,22 @@ public class GatewayserviceApplication {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route(r -> r.path("/auth/register", "/auth/authenticate", "/user/**")
+				.route(r -> r.path("/auth/register", "/auth/authenticate")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
 				)
-				.route(r -> r.path("/access")
+				.route(r -> r.path("/auth/access", "/auth/user/**")
 						.filters(f -> f
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
 				)
-//				.route(r -> r.path("/email/**")
-//						.filters(f -> f
-//								.addResponseHeader("X-Powered-By", "Gateway Service"))
-//						.uri("http://localhost:6005")
-//				)
+				.route(r -> r.path("/email/**")
+						.filters(f -> f
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://email-service:6005")
+				)
 				.route(r -> r.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
