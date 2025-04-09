@@ -5,10 +5,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class AuthUtility {
-    public static String requestNewAccessToken(String refreshToken) {
+    public String requestNewAccessToken(String refreshToken) {
         //Set the headers
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", refreshToken);
