@@ -22,9 +22,13 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     private String secretKey;
 
     private final WebClient webClient;
+    private AuthUtility authUtility;
+    private CookieUtility cookieUtility;
 
-    public JwtAuthenticationFilter() {
+    public JwtAuthenticationFilter(AuthUtility authUtility, CookieUtility cookieUtility) {
         super(Config.class);
+        this.authUtility = authUtility;
+        this.cookieUtility = cookieUtility;
         this.webClient = WebClient.builder().baseUrl("http://localhost:6001").build(); // JWT auth service URL
     }
 
@@ -33,7 +37,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         return (exchange, chain) -> {
             HttpHeaders headers = exchange.getRequest().getHeaders();
             String accessToken = headers.getFirst("Authorization");
-            String refreshToken = CookieUtility.extractRefreshTokenFromCookies(exchange, "refresh_token");
+            String refreshToken = cookieUtility.extractRefreshTokenFromCookies(exchange, "refresh_token");
 
             if (accessToken == null || !accessToken.startsWith("Bearer ")) {
                 return unauthorized(exchange, "Missing or invalid access token");
@@ -59,7 +63,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                 }
 
                 // Call JWT auth service to validate refresh token and get a new access token
-                String newAccessToken = AuthUtility.requestNewAccessToken(refreshToken);
+                String newAccessToken = authUtility.requestNewAccessToken(refreshToken);
 
 //                //Uncomment to return new token in cookie
 //                // Set the new access token in an HttpOnly cookie
