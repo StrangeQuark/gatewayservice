@@ -9,6 +9,11 @@ services:
     environment:
       - ACCESS_SECRET_KEY=${ACCESS_SECRET_KEY}
       - DOCKER_DEPLOYMENT=true
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 networks:
   shared-network:
     external: true
