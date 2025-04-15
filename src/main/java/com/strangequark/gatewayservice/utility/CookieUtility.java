@@ -1,13 +1,15 @@
 package com.strangequark.gatewayservice.utility;
 
 import org.springframework.http.HttpCookie;
+import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.util.List;
 
+@Service
 public class CookieUtility {
-    public static String extractRefreshTokenFromCookies(ServerWebExchange exchange, String cookieName) {
+    public String extractRefreshTokenFromCookies(ServerWebExchange exchange, String cookieName) {
         // Get all cookies from the exchange
         MultiValueMap<String, HttpCookie> cookies = exchange.getRequest().getCookies();
 
