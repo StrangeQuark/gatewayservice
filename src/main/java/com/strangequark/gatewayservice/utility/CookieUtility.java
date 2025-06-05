@@ -1,5 +1,7 @@
 package com.strangequark.gatewayservice.utility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -9,7 +11,11 @@ import java.util.List;
 
 @Service
 public class CookieUtility {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CookieUtility.class);
+
     public String extractRefreshTokenFromCookies(ServerWebExchange exchange, String cookieName) {
+        LOGGER.info("Extracting refresh token from cookies");
+
         // Get all cookies from the exchange
         MultiValueMap<String, HttpCookie> cookies = exchange.getRequest().getCookies();
 
@@ -20,10 +26,12 @@ public class CookieUtility {
 
             // If the list is not empty, return the value of the first matching cookie
             if (matchingCookies != null && !matchingCookies.isEmpty()) {
+                LOGGER.info("Cookie is present");
                 return matchingCookies.get(0).getValue();
             }
         }
 
+        LOGGER.error("Cookie not found");
         // Return null if the cookie is not found or has no value
         return null;
     }

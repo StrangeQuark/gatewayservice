@@ -1,6 +1,8 @@
 package com.strangequark.gatewayservice;
 
 import com.strangequark.gatewayservice.filters.JwtAuthenticationFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -9,15 +11,19 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class GatewayserviceApplication {
+	private static final Logger LOGGER = LoggerFactory.getLogger(GatewayserviceApplication.class);
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 	public GatewayserviceApplication(JwtAuthenticationFilter jwtAuthenticationFilter) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		LOGGER.info("GatewayserviceApplication object initialized");
 	}
 
 	public static void main(String[] args) {
+		LOGGER.info("Starting Gateway Service Application...");
 		SpringApplication.run(GatewayserviceApplication.class, args);
+		LOGGER.info("Gateway Service Application started.");
 	}
 
 	@Bean
