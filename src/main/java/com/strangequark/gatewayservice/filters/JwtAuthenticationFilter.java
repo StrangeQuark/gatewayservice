@@ -5,6 +5,8 @@ import com.strangequark.gatewayservice.utility.CookieUtility;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.SignatureException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -17,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Value("${accessSecretKey}")
     private String secretKey;
@@ -39,7 +42,10 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             String accessToken = headers.getFirst("Authorization");
             String refreshToken = cookieUtility.extractRefreshTokenFromCookies(exchange, "refresh_token");
 
+            LOGGER.info("JWT filter to path: " + exchange.getRequest().getPath());
+
             if (accessToken == null || !accessToken.startsWith("Bearer ")) {
+                LOGGER.error("Missing or invalid access token");
                 return unauthorized(exchange, "Missing or invalid access token");
             }
 
@@ -54,16 +60,21 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                         .getBody();
 
                 // If the token is valid and not expired, proceed with the request
+                LOGGER.info("Access token is valid");
                 return chain.filter(exchange);
 
             } catch (io.jsonwebtoken.ExpiredJwtException ex) {
+                LOGGER.info("Access token is expired");
+
                 // Token expired, handle refresh token
                 if (refreshToken == null || refreshToken.isEmpty()) {
+                    LOGGER.error("Missing refresh token");
                     return unauthorized(exchange, "Missing refresh token in cookies");
                 }
 
                 // Call JWT auth service to validate refresh token and get a new access token
                 String newAccessToken = authUtility.requestNewAccessToken(refreshToken);
+                LOGGER.info("New access token created");
 
 //                //Uncomment to return new token in cookie
 //                // Set the new access token in an HttpOnly cookie
@@ -83,10 +94,15 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                 //Add the new access token back to the response headers so it can be sent back for the client to store
                 exchange.getResponse().getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + newAccessToken);
 
+                LOGGER.info("Return new access token");
                 return chain.filter(mutatedExchange);
             } catch (SignatureException e) {
+                LOGGER.error("Invalid access token signature");
+                LOGGER.error(e.getMessage());
                 return unauthorized(exchange, "Invalid access token signature");
             } catch (Exception e) {
+                LOGGER.error("Invalid access token");
+                LOGGER.error(e.getMessage());
                 return unauthorized(exchange, "Invalid access token");
             }
         };
@@ -94,6 +110,8 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
     private Mono<Void> unauthorized(ServerWebExchange exchange, String message) {
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+
+        LOGGER.error("Unauthorized request");
         return exchange.getResponse().setComplete();
     }
 
