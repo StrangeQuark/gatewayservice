@@ -48,7 +48,7 @@ public class GatewayserviceApplication {
 				.route(r -> r.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://react-service:3001"))
+						.uri("http://react-service:6000"))
 				.build();
 	}
 }
