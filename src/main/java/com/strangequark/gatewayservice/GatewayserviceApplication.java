@@ -29,14 +29,11 @@ public class GatewayserviceApplication {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
+				//
+				// Requests not requiring authentication
+				//
 				.route(r -> r.path("/auth/register", "/auth/authenticate")
 						.filters(f -> f
-								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://auth-service:6001")
-				)
-				.route(r -> r.path("/auth/access", "/auth/user/**")
-						.filters(f -> f
-								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
 				)
@@ -45,6 +42,29 @@ public class GatewayserviceApplication {
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://email-service:6005")
 				)
+				.route(r -> r.path("/api/vault/health")
+						.filters(f -> f
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://{serviceName}-service:6020")
+				)
+				//
+ 				// Requests requiring authentication
+ 				//
+				.route(r -> r.path("/auth/access", "/auth/user/**")
+						.filters(f -> f
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://auth-service:6001")
+				)
+				.route(r -> r.path("/api/vault/**")
+						.filters(f -> f
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://vault-service:6020")
+				)
+				//
+ 				// All other requests go to frontend
+ 				//
 				.route(r -> r.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
