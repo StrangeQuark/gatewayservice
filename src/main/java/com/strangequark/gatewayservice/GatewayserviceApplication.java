@@ -45,7 +45,7 @@ public class GatewayserviceApplication {
 				.route(r -> r.path("/api/vault/health")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://{serviceName}-service:6020")
+						.uri("http://vault-service:6020")
 				)
 				//
  				// Requests requiring authentication
