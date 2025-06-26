@@ -32,7 +32,7 @@ public class GatewayserviceApplication {
 				//
 				// Requests not requiring authentication
 				//
-				.route(r -> r.path("/api//auth/register", "/api//auth/authenticate")
+				.route(r -> r.path("/api/auth/register", "/api/auth/authenticate")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
@@ -50,7 +50,7 @@ public class GatewayserviceApplication {
 				//
  				// Requests requiring authentication
  				//
-				.route(r -> r.path("/api//auth/access", "/api//auth/user/**")
+				.route(r -> r.path("/api/auth/access", "/api/auth/user/**")
 						.filters(f -> f
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
