@@ -1,3 +1,4 @@
+// Integration file: Auth
 package com.strangequark.gatewayservice.filters;
 
 import com.strangequark.gatewayservice.utility.AuthUtility;
