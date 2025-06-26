@@ -32,25 +32,34 @@ public class GatewayserviceApplication {
 				//
 				// Requests not requiring authentication
 				//
-				.route(r -> r.path("/auth/register", "/auth/authenticate")
+
+ 				// Integration function start: Auth
+				.route(r -> r.path("/api/auth/register", "/api/auth/authenticate")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
-				)
-				.route(r -> r.path("/email/**")
+				)// Integration function end: Auth
+
+				// Integration function start: Email
+				.route(r -> r.path("/api/email/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://email-service:6005")
-				)
+				)// Integration function end: Email
+
+				// Integration function start: Vault
 				.route(r -> r.path("/api/vault/health")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://vault-service:6020")
-				)
+				)// Integration function end: Vault
+
 				//
  				// Requests requiring authentication
  				//
-				.route(r -> r.path("/auth/access", "/auth/user/**")
+
+				// Integration function start: Auth
+				.route(r -> r.path("/api/auth/access", "/api/auth/user/**")
 						.filters(f -> f
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
@@ -61,14 +70,26 @@ public class GatewayserviceApplication {
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://vault-service:6020")
-				)
+				)// Integration function end: Auth
+
+				// Integration function start: File
+				.route(r -> r.path("/api/file/**")
+						.filters(f -> f
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))// Integration line: Auth
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://file-service:6010")
+				)// Integration function end: File
+
 				//
  				// All other requests go to frontend
  				//
+
+				// Integration function start: React
 				.route(r -> r.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://react-service:6000"))
+						.uri("http://react-service:6000"))// Integration function end: React
+
 				.build();
 	}
 }
