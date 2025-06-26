@@ -62,6 +62,12 @@ public class GatewayserviceApplication {
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://vault-service:6020")
 				)
+				.route(r -> r.path("/api/file/**")
+						.filters(f -> f
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://file-service:6010")
+				)
 				//
  				// All other requests go to frontend
  				//
