@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         super(Config.class);
         this.authUtility = authUtility;
         this.cookieUtility = cookieUtility;
-        this.webClient = WebClient.builder().baseUrl("http://localhost:6001").build(); // JWT auth service URL
+        this.webClient = WebClient.builder().baseUrl("http://auth-service:6001").build(); // JWT auth service URL
     }
 
     @Override

@@ -24,8 +24,7 @@ public class AuthUtility {
         // Create the HttpEntity with the headers
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        String url = Boolean.parseBoolean(System.getenv("DOCKER_DEPLOYMENT")) ?
-                "http://auth-service:6001/access" : "http://localhost:6001/access";
+        String url = "http://auth-service:6001/access";
 
         LOGGER.info("Attempting to make access token request");
 
