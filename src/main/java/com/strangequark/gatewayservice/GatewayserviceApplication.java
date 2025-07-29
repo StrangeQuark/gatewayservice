@@ -59,7 +59,7 @@ public class GatewayserviceApplication {
 				//
 
  				// Integration function start: Auth
-				.route(r -> r.path("/api/auth/register", "/api/auth/authenticate")
+				.route(r -> r.path("/api/auth/health", "/api/auth/register", "/api/auth/authenticate", "/api/auth/access")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
@@ -79,23 +79,32 @@ public class GatewayserviceApplication {
 						.uri("http://vault-service:6020")
 				)// Integration function end: Vault
 
+				// Integration function start: File
+				.route(r -> r.path("/api/file/health")
+						.filters(f -> f
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://file-service:6010")
+				)// Integration function end: File
+
 				//
  				// Requests requiring authentication
  				//
 
 				// Integration function start: Auth
-				.route(r -> r.path("/api/auth/access", "/api/auth/user/**")
+				.route(r -> r.path("/api/auth/user/**")
 						.filters(f -> f
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
-				)
+				)// Integration function end: Auth
+
+				// Integration function start: Vault
 				.route(r -> r.path("/api/vault/**")
 						.filters(f -> f
-								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))// Integration line: Auth
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://vault-service:6020")
-				)// Integration function end: Auth
+				)// Integration function end: Vault
 
 				// Integration function start: File
 				.route(r -> r.path("/api/file/**")
