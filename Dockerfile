@@ -17,11 +17,11 @@ FROM eclipse-temurin:21-alpine
 WORKDIR /app
 
 COPY --from=builder /app/target/*.jar app.jar
-# COPY certs ./certs Uncomment for production deployment
+# COPY certs ./certs # Uncomment for production deployment
 
 ENV JAVA_OPTS=""
 
-# EXPOSE 8443 Uncomment for production deployment
+# EXPOSE 8443 # Uncomment for production deployment
 EXPOSE 8080
 
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
