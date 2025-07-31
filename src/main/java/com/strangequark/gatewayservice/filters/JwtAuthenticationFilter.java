@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
-    @Value("${accessSecretKey}")
+    @Value("${ACCESS_SECRET_KEY}")
     private String secretKey;
 
     private final WebClient webClient;

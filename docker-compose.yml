@@ -7,7 +7,7 @@ services:
       - "8080:8080"
     container_name: gateway-service
     environment:
-      - ACCESS_SECRET_KEY=${ACCESS_SECRET_KEY}
+      - ACCESS_SECRET_KEY=${ACCESS_SECRET_KEY} # Integration line: Auth
     restart: unless-stopped
     deploy:
       resources:
