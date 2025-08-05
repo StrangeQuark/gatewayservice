@@ -3,26 +3,17 @@ package com.strangequark.gatewayservice;
 import com.strangequark.gatewayservice.filters.JwtAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @SpringBootApplication
 public class GatewayserviceApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GatewayserviceApplication.class);
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-	@Value("${cors.allowed-origins}")
-	private List<String> allowedOrigins;
 
 	public GatewayserviceApplication(JwtAuthenticationFilter jwtAuthenticationFilter) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -34,22 +25,6 @@ public class GatewayserviceApplication {
 		SpringApplication.run(GatewayserviceApplication.class, args);
 		LOGGER.info("Gateway Service Application started.");
 	}
-
-	//Configure the CORS policy, allow the ReactService through
-	@Bean
-	public CorsWebFilter corsWebFilter() {
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.setAllowedOrigins(allowedOrigins);
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
-
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", config);
-
-		return new CorsWebFilter(source);
-	}
-
 
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
