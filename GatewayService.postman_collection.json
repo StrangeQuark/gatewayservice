@@ -1,0 +1,1873 @@
+{
+	"info": {
+		"_postman_id": "2ad2f649-8e4a-4825-8bbe-f35c636c6e7c",
+		"name": "GatewayService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29355577"
+	},
+	"item": [
+		{
+			"name": "Auth - Healthcheck",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Get User ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/get-user-id?username=testUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"get-user-id"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "testUser"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Access",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ACCESS_TOKEN\", pm.response.json().jwtToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{REFRESH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/access",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Register User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser\",\r\n    \"email\": \"test@t.com\",\r\n    \"password\": \"password123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Authenticate User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"REFRESH_TOKEN\", pm.response.json().jwtToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser\",\r\n    \"password\": \"password123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Enable user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@t.com\"\r\n    // \"username\": \"testUser\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/enable-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"enable-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Disable user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@t.com\"\r\n    // \"username\": \"testUser\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/disable-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"disable-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Update Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"password123!\",\r\n    \"newPassword\": \"newPassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/update-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"update-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Add Authorizations To User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser\",\r\n    // \"email\": \"test@t.com\",\r\n    \"authorizations\": [\r\n        \"Auth 2\",\r\n        \"Auth 3\",\r\n        \"t\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/add-authorizations-to-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"add-authorizations-to-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Remove Authorizations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser\",\r\n    // \"email\": \"test@t.com\",\r\n    \"authorizations\": [\r\n        \"Auth 2\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/remove-authorizations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"remove-authorizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser\",\r\n    // \"email\": \"test@t.com\",\r\n    \"password\": \"password123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/delete-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"delete-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Update email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"new@test.com\",\r\n    \"password\": \"password123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/update-email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"update-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Update username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"REFRESH_TOKEN\", pm.response.json().refreshToken);\r",
+							"pm.environment.set(\"ACCESS_TOKEN\", pm.response.json().accessToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"newUsername\",\r\n    \"password\": \"password123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/update-username",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"update-username"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Send password reset email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@t.com\"\r\n    // \"username\": \"testUser\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/send-password-reset-email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"send-password-reset-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Bootstrap Super User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-BOOTSTRAP-SECRET",
+						"value": "6F54AFE5EBE3355E3E6932ADA8FB9F00BA1780E80B277AB56F23A5AE806C0660",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testSuper\",\r\n    \"email\": \"super@t.com\",\r\n    \"password\": \"password123!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/internal/bootstrap",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"internal",
+						"bootstrap"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Healthcheck",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/email/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"email",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Send Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recipient\": \"test@test.com\",\r\n    \"sender\": \"test@emailservice.com\",\r\n    \"email\": \"Test email body\",\r\n    \"subject\": \"Test email subject\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/email/send-email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"email",
+						"send-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Send Email With Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recipient\": \"test@test.com\",\r\n    \"sender\": \"test@emailservice.com\",\r\n    \"email\": \"Test email body with token\",\r\n    \"subject\": \"Test email subject with token\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/email/send-email-with-token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"email",
+						"send-email-with-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Send Register Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recipient\": \"test@test.com\",\r\n    \"sender\": \"test@emailservice.com\",\r\n    \"subject\": \"Test register email subject\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/email/send-register-email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"email",
+						"send-register-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Send Password Reset Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recipient\": \"test@test.com\",\r\n    \"sender\": \"test@emailservice.com\",\r\n    \"subject\": \"Test password reset email subject\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/email/send-password-reset-email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"email",
+						"send-password-reset-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Confirm token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/email/confirm-token?token=34e80f73-1a8d-4908-be79-749e846ca885",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"email",
+						"confirm-token"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "34e80f73-1a8d-4908-be79-749e846ca885"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Enable user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/email/enable-user?token=29051776-c12e-4fc9-9c1c-4f5230cdd4d1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"email",
+						"enable-user"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "29051776-c12e-4fc9-9c1c-4f5230cdd4d1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Create collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/new-collection/testCollection",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"new-collection",
+						"testCollection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Get all collections",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/get-all-collections",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"get-all-collections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Upload",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/strangequark/Desktop/Game helpers/england2025.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/file/upload/testCollection",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"upload",
+						"testCollection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Get all files",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/get-all/testCollection",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"get-all",
+						"testCollection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Download file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/download/testCollection/england2025.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"download",
+						"testCollection",
+						"england2025.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Delete file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/delete/testCollection/england2025.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"delete",
+						"testCollection",
+						"england2025.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Delete collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/delete-collection/testCollection",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"delete-collection",
+						"testCollection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Add User to Collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\",\n    \"username\": \"testUser1\",\n    \"role\": \"READ_WRITE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/file/add-user-to-collection",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"add-user-to-collection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Delete User from Collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\",\n    \"username\": \"testUser1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/file/delete-user-from-collection",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"delete-user-from-collection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Create Service",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/create-service/testService",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"create-service",
+						"testService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Create Environment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/create-environment/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"create-environment",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Get Service",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/get-service/testService",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"get-service",
+						"testService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Get Environment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/get-environment/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"get-environment",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Get Variables by Service",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/get-variables-by-service/testService",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"get-variables-by-service",
+						"testService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Get Variables by Environment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/get-variables-by-environment/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"get-variables-by-environment",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Get Variable by Name",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/get-variable-by-name/testService/e3/abc2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"get-variable-by-name",
+						"testService",
+						"e3",
+						"abc2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Add Variable",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"abc2\",\n    \"value\": \"aa2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vault/add-variable/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"add-variable",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Update variable",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"abc2\",\n    \"value\": \"abcdefg\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vault/update-variable/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"update-variable",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Add Env File",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/strangequark/Desktop/Microservices/authservice/.env"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vault/add-env-file/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"add-env-file",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Download env file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/download-env-file/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"download-env-file",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Delete Variable",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/delete-variable/testService/e3/abc2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"delete-variable",
+						"testService",
+						"e3",
+						"abc2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Delete Environment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/delete-environment/testService/e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"delete-environment",
+						"testService",
+						"e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Delete Service",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/delete-service/testService",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"delete-service",
+						"testService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Add user to service",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"username\": \"testUser1\",\n    \"role\": \"MAINTAINER\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vault/add-user-to-service",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"add-user-to-service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Delete user from service",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"username\": \"testUser1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vault/delete-user-from-service",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"delete-user-from-service"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
