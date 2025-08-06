@@ -5,6 +5,8 @@ import com.strangequark.gatewayservice.utility.AuthUtility;
 import com.strangequark.gatewayservice.utility.CookieUtility;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +57,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             try {
                 // Validate access token locally
                 Claims claims = Jwts.parserBuilder()
-                        .setSigningKey(secretKey.getBytes())
+                        .setSigningKey(Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey)))
                         .build()
                         .parseClaimsJws(accessToken)
                         .getBody();
