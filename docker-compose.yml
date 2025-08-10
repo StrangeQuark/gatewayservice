@@ -14,7 +14,6 @@ services:
 #      - SERVER_SSL_KEY_STORE=${SERVER_SSL_KEY_STORE} # Uncomment for prod deployments
 #      - SERVER_SSL_KEY_STORE_PASSWORD=${SERVER_SSL_KEY_STORE_PASSWORD} # Uncomment for prod deployments
 #      - SERVER_SSL_KEY_STORE_TYPE=${SERVER_SSL_KEY_STORE_TYPE} # Uncomment for prod deployments
-      - ACCESS_SECRET_KEY=${ACCESS_SECRET_KEY} # Integration line: Auth
     restart: unless-stopped
     deploy:
       resources:
