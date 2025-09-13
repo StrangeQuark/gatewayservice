@@ -23,8 +23,8 @@ public class GatewayRouteTest {
                 .uri("/api/auth/health")
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }// Integration function end: Auth
-
+    }
+    // Integration function end: Auth
     // Integration function start: Email
     @Test
     void testEmailRouteForwarding() {
@@ -32,8 +32,8 @@ public class GatewayRouteTest {
                 .uri("/api/email/health")
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }// Integration function end: Email
-
+    }
+    // Integration function end: Email
     // Integration function start: File
     @Test
     void testFileRouteForwarding() {
@@ -41,8 +41,8 @@ public class GatewayRouteTest {
                 .uri("/api/file/health")
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }// Integration function end: File
-
+    }
+    // Integration function end: File
     // Integration function start: Vault
     @Test
     void testVaultRouteForwarding() {
@@ -50,8 +50,8 @@ public class GatewayRouteTest {
                 .uri("/api/vault/health")
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }// Integration function end: Vault
-
+    }
+    // Integration function end: Vault
     // Integration function start: React
     @Test
     void testReactRouteForwarding() {
@@ -59,5 +59,6 @@ public class GatewayRouteTest {
                 .uri("/")
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }// Integration function end: React
+    }
+    // Integration function end: React
 }
