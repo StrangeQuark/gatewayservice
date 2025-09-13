@@ -26,35 +26,35 @@ public class GatewayserviceApplication {
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://auth-service:6001")
-				)// Integration function end: Auth
-
+				)
+                // Integration function end: Auth
 				// Integration function start: Email
 				.route(r -> r.path("/api/email/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://email-service:6005")
-				)// Integration function end: Email
-
+				)
+                // Integration function end: Email
 				// Integration function start: File
 				.route(r -> r.path("/api/file/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://file-service:6010")
-				)// Integration function end: File
-
+				)
+                // Integration function end: File
 				// Integration function start: Vault
 				.route(r -> r.path("/api/vault/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://vault-service:6020")
-				)// Integration function end: Vault
-
+				)
+                // Integration function end: Vault
 				// Integration function start: React
 				.route(r -> r.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://react-service"))// Integration function end: React
-
+						.uri("http://react-service"))
+                // Integration function end: React
 				.build();
 	}
 }
