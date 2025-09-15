@@ -1955,6 +1955,46 @@
 			"response": []
 		},
 		{
+			"name": "Vault - Delete user from all services",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testUser1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vault/delete-user-from-all-services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"delete-user-from-all-services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "File - Healthcheck",
 			"request": {
 				"method": "GET",
@@ -2453,6 +2493,46 @@
 						"api",
 						"file",
 						"delete-user-from-collection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Delete User from all Collections",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testUser1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/file/delete-user-from-all-collections",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"delete-user-from-all-collections"
 					]
 				}
 			},
