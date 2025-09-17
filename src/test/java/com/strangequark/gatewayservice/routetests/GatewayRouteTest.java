@@ -61,4 +61,12 @@ public class GatewayRouteTest {
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     // Integration function end: React
+    // Example test
+//    @Test
+//    void testExampleRouteForwarding() {
+//        webTestClient.get()
+//                .uri("/")
+//                .exchange()
+//                .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 }
