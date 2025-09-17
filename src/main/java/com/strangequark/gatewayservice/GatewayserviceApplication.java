@@ -55,6 +55,11 @@ public class GatewayserviceApplication {
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri("http://react-service"))
                 // Integration function end: React
+                //Example route
+//                .route(r -> r.path("/**")
+//                        .filters(f -> f
+//                                .addResponseHeader("X-Powered-By", "Gateway Service"))
+//                        .uri("http://your-service"))
 				.build();
 	}
 }
