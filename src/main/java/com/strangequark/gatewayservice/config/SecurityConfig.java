@@ -37,6 +37,7 @@ public class SecurityConfig {
     public GlobalFilter cleanAndAddCorsHeaders() {
         return (exchange, chain) -> chain.filter(exchange).then(Mono.fromRunnable(() -> {
             ServerHttpResponse response = exchange.getResponse();
+            String origin = exchange.getRequest().getHeaders().getOrigin();
 
             // Remove downstream CORS headers first
             response.getHeaders().remove("Access-Control-Allow-Origin");
@@ -46,7 +47,9 @@ public class SecurityConfig {
             response.getHeaders().remove("Access-Control-Expose-Headers");
 
             // Add gateway CORS headers once
-            response.getHeaders().add("Access-Control-Allow-Origin", allowedOrigins.get(0));
+            if (origin != null && allowedOrigins.contains(origin)) {
+                response.getHeaders().add("Access-Control-Allow-Origin", origin);
+            }
             response.getHeaders().add("Access-Control-Allow-Credentials", "true");
             response.getHeaders().add("Access-Control-Allow-Headers", "*");
             response.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
