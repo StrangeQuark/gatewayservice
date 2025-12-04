@@ -49,6 +49,13 @@ public class GatewayserviceApplication {
 						.uri("http://vault-service:6020")
 				)
                 // Integration function end: Vault
+                // Integration function start: Telemetry
+                .route(r -> r.path("/api/telemetry/**")
+                        .filters(f -> f
+                                .addResponseHeader("X-Powered-By", "Gateway Service"))
+                        .uri("http://telemetry-service:6050")
+                )
+                // Integration function end: Telemetry
 				// Integration function start: React
 				.route(r -> r.path("/**")
 						.filters(f -> f
