@@ -48,6 +48,7 @@ This collection provides all endpoints for the other MSINIT microservices:
 - Emailservice
 - Fileservice
 - Vaultservice
+- Telemetryservice
 - Reactservice
   <br><br>
 
@@ -66,6 +67,7 @@ Gatewayservice integrates with all MSINIT services. Find a list of all the diffe
 - [Emailservice GitHub Repository](https://github.com/StrangeQuark/emailservice)
 - [Fileservice GitHub Repository](https://github.com/StrangeQuark/fileservice)
 - [Vaultservice GitHub Repository](https://github.com/StrangeQuark/vaultservice)
+- [Telemetryservice GitHub Repository](https://github.com/StrangeQuark/telemetryService)
 - [Reactservice GitHub Repository](https://github.com/StrangeQuark/reactservice)
 <br><br>
 

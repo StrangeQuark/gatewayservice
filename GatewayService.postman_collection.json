@@ -2683,6 +2683,174 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Telemetry - Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/telemetry/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"telemetry",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Telemetry - Create event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"test123\",\n    \"eventType\": \"test-type\",\n    \"timestamp\": \"2025-12-02T00:00:00.000000\",\n    \"metadata\": {\n        \"testKey\": \"testValue\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/telemetry/create-event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"telemetry",
+						"create-event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Telemetry - Get events",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/telemetry/get-events?eventType=test-type",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"telemetry",
+						"get-events"
+					],
+					"query": [
+						{
+							"key": "startDateTime",
+							"value": "2025-11-13T02:08:41.862",
+							"disabled": true
+						},
+						{
+							"key": "endDateTime",
+							"value": "2025-11-13T02:08:41.862",
+							"disabled": true
+						},
+						{
+							"key": "eventType",
+							"value": "test-type"
+						},
+						{
+							"key": "numberOfEvents",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Telemetry - Count events",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/telemetry/count-events?eventType=test-type&interval=minute&serviceName=test123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"telemetry",
+						"count-events"
+					],
+					"query": [
+						{
+							"key": "startDateTime",
+							"value": "2025-11-13T02:08:41.862",
+							"disabled": true
+						},
+						{
+							"key": "endDateTime",
+							"value": "2025-11-20T02:08:41.862",
+							"disabled": true
+						},
+						{
+							"key": "eventType",
+							"value": "test-type"
+						},
+						{
+							"key": "interval",
+							"value": "minute"
+						},
+						{
+							"key": "serviceName",
+							"value": "test123"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

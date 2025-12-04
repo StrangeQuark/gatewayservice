@@ -52,6 +52,15 @@ public class GatewayRouteTest {
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     // Integration function end: Vault
+    // Integration function start: Telemetry
+    @Test
+    void testTelemetryRouteForwarding() {
+        webTestClient.get()
+                .uri("/api/telemetry/health")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    // Integration function end: Telemetry
     // Integration function start: React
     @Test
     void testReactRouteForwarding() {
