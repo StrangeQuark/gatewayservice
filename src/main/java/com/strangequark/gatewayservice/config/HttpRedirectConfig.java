@@ -9,7 +9,10 @@ import io.netty.handler.codec.http.*;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /*
     This file is for redirecting traffic from http (port 80) to https (port 443)
@@ -18,6 +21,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HttpRedirectConfig {
 //    private static final Logger LOGGER = LoggerFactory.getLogger(HttpRedirectConfig.class);
+//
+//    @Value("${hosts}")
+//    private List<String> hosts;
 //
 //    @PostConstruct
 //    public void startRedirectServer() {
@@ -42,6 +48,16 @@ public class HttpRedirectConfig {
 //                                    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest req) {
 //                                        LOGGER.info("Being channel read");
 //                                        String host = req.headers().get(HttpHeaderNames.HOST);
+//
+//                                        // If the host in the request header is null or not in the valid hosts list
+//                                        // then we redirect to the first host in the hosts list
+//                                        if(host == null || !hosts.contains(host.toLowerCase())) {
+//                                            String firstHost = hosts.getFirst().toLowerCase();
+//
+//                                            LOGGER.error("Host " + host + " is not a valid host, redirecting to " + firstHost);
+//                                            host = firstHost;
+//                                        }
+//
 //                                        String redirectUrl = "https://" + host + req.uri();
 //
 //                                        FullHttpResponse response = new DefaultFullHttpResponse(

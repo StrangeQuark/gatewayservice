@@ -10,6 +10,7 @@ services:
       - SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME}
       - SERVER_PORT=${SERVER_PORT}
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - HOSTS=${HOSTS}
 #      - SERVER_SSL_ENABLED=${SERVER_SSL_ENABLED} # Uncomment for prod deployments
 #      - SERVER_SSL_KEY_STORE=${SERVER_SSL_KEY_STORE} # Uncomment for prod deployments
 #      - SERVER_SSL_KEY_STORE_PASSWORD=${SERVER_SSL_KEY_STORE_PASSWORD} # Uncomment for prod deployments
