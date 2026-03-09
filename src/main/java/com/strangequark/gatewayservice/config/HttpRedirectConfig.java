@@ -9,10 +9,8 @@ import io.netty.handler.codec.http.*;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 /*
     This file is for redirecting traffic from http (port 80) to https (port 443)
@@ -22,8 +20,8 @@ import java.util.List;
 public class HttpRedirectConfig {
 //    private static final Logger LOGGER = LoggerFactory.getLogger(HttpRedirectConfig.class);
 //
-//    @Value("${hosts}")
-//    private List<String> hosts;
+//    @Autowired
+//    private HostsConfig hostsConfig;
 //
 //    @PostConstruct
 //    public void startRedirectServer() {
@@ -49,13 +47,16 @@ public class HttpRedirectConfig {
 //                                        LOGGER.info("Being channel read");
 //                                        String host = req.headers().get(HttpHeaderNames.HOST);
 //
-//                                        // If the host in the request header is null or not in the valid hosts list
-//                                        // then we redirect to the first host in the hosts list
-//                                        if(host == null || !hosts.contains(host.toLowerCase())) {
-//                                            String firstHost = hosts.getFirst().toLowerCase();
+//                                        // If the host is not null and contains a port, remove the port
+//                                        if (host != null && host.contains(":")) {
+//                                            host = host.substring(0, host.indexOf(":"));
+//                                        }
 //
-//                                            LOGGER.error("Host " + host + " is not a valid host, redirecting to " + firstHost);
-//                                            host = firstHost;
+//                                        // If the host in the request header is null or not in the valid hosts list
+//                                        // then we redirect to the main host
+//                                        if(host == null || !hostsConfig.getHosts().values().contains(host.toLowerCase())) {
+//                                            LOGGER.error("Host " + host + " is not a valid host, redirecting to main host");
+//                                            host = hostsConfig.getHosts().get("main").toLowerCase();
 //                                        }
 //
 //                                        String redirectUrl = "https://" + host + req.uri();
@@ -72,8 +73,8 @@ public class HttpRedirectConfig {
 //                            }
 //                        });
 //
-//                LOGGER.info("Bind to port 8080");
-//                b.bind(8080).sync().channel().closeFuture().sync();
+//                LOGGER.info("Bind to port 80");
+//                b.bind(80).sync().channel().closeFuture().sync();
 //            } catch (InterruptedException e) {
 //                LOGGER.error("Thread interrupted");
 //                LOGGER.error(e.getMessage());
