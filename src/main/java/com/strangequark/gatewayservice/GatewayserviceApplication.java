@@ -1,7 +1,9 @@
 package com.strangequark.gatewayservice;
 
+import com.strangequark.gatewayservice.config.HostsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -12,6 +14,9 @@ import org.springframework.context.annotation.Bean;
 public class GatewayserviceApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GatewayserviceApplication.class);
 
+	@Autowired
+    private HostsConfig hostsConfig;
+
 	public static void main(String[] args) {
 		LOGGER.info("Starting Gateway Service Application...");
 		SpringApplication.run(GatewayserviceApplication.class, args);
@@ -21,6 +26,15 @@ public class GatewayserviceApplication {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
+				// Integration function start: Jenkins
+				.route("jenkins_route", r -> r.host(hostsConfig.getHosts().get("jenkins"))
+						.and()
+						.path("/**")
+						.filters(f -> f
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://jenkins-service:8080")
+				)
+				// Integration function end: Jenkins
  				// Integration function start: Auth
 				.route(r -> r.path("/api/auth/**")
 						.filters(f -> f
