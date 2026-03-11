@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /*
-    This file is for redirecting traffic from http (port 80) to https (port 443)
+    This file is for redirecting traffic from http (port 8080) to https (port 443)
     It is commented out for development but should be made active when doing a prod deployment
  */
 @Configuration
@@ -73,8 +73,8 @@ public class HttpRedirectConfig {
 //                            }
 //                        });
 //
-//                LOGGER.info("Bind to port 80");
-//                b.bind(80).sync().channel().closeFuture().sync();
+//                LOGGER.info("Bind to port 8080");
+//                b.bind(8080).sync().channel().closeFuture().sync();
 //            } catch (InterruptedException e) {
 //                LOGGER.error("Thread interrupted");
 //                LOGGER.error(e.getMessage());
