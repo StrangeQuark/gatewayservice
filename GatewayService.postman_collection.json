@@ -2148,6 +2148,118 @@
 			"response": []
 		},
 		{
+			"name": "Vault - Bootstrap env file",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/strangequark/Music/t.env"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vault/bootstrap/add-env/testBootstrapService/testBootstrapEnv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"bootstrap",
+						"add-env",
+						"testBootstrapService",
+						"testBootstrapEnv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - Bootstrap user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/bootstrap/bootstrap-user/jwtTokenHere",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"bootstrap",
+						"bootstrap-user",
+						"jwtTokenHere"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vault - CICD get",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CICD-TOKEN",
+						"value": "12C951166DD986226A26E65DEC4CC4C1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/vault/cicd/testBootstrapService/testBootstrapEnv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vault",
+						"cicd",
+						"testBootstrapService",
+						"testBootstrapEnv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "File - Healthcheck",
 			"request": {
 				"method": "GET",
