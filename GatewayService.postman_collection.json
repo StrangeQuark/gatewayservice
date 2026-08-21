@@ -864,55 +864,6 @@
 			"response": []
 		},
 		{
-			"name": "Auth - Bootstrap Super User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "X-BOOTSTRAP-SECRET",
-						"value": "6F54AFE5EBE3355E3E6932ADA8FB9F00BA1780E80B277AB56F23A5AE806C0660",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"testSuper\",\r\n    \"email\": \"super@t.com\",\r\n    \"password\": \"password123!\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/auth/internal/bootstrap",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"auth",
-						"internal",
-						"bootstrap"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Auth - Service Account Authentication",
 			"event": [
 				{
@@ -2156,8 +2107,9 @@
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json"
+						"key": "X-VAULT-BOOTSTRAP-TOKEN",
+						"value": "{{BOOTSTRAP_TOKEN}}",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -2205,12 +2157,13 @@
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json"
+						"key": "X-VAULT-BOOTSTRAP-TOKEN",
+						"value": "{{BOOTSTRAP_TOKEN}}",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/bootstrap/bootstrap-user/jwtTokenHere",
+					"raw": "http://localhost:8080/api/vault/bootstrap/bootstrap-user/testBootstrapService",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2221,7 +2174,7 @@
 						"vault",
 						"bootstrap",
 						"bootstrap-user",
-						"jwtTokenHere"
+						"testBootstrapService"
 					]
 				}
 			},
