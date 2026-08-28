@@ -16,10 +16,15 @@
 					"type": "noauth"
 				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n  \"token\": \"fc18594a-a9be-47b9-9754-eb048a32c48e\",\n  \"newPassword\": \"newPassword123\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1309,7 +1314,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/email/reset-user-password?token=fc18594a-a9be-47b9-9754-eb048a32c48e&newPassword=newPassword123",
+					"raw": "http://localhost:8080/api/email/reset-user-password",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1320,16 +1325,7 @@
 						"email",
 						"reset-user-password"
 					],
-					"query": [
-						{
-							"key": "token",
-							"value": "fc18594a-a9be-47b9-9754-eb048a32c48e"
-						},
-						{
-							"key": "newPassword",
-							"value": "newPassword123"
-						}
-					]
+					"query": []
 				}
 			},
 			"response": []
