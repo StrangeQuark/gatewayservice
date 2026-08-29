@@ -1,6 +1,7 @@
 package com.strangequark.gatewayservice;
 
 import com.strangequark.gatewayservice.config.HostsConfig;
+import com.strangequark.gatewayservice.config.RateLimitConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class GatewayserviceApplication {
 
 	@Autowired
     private HostsConfig hostsConfig;
+	@Autowired
+	private RateLimitConfig rateLimitConfig;
 
 	public static void main(String[] args) {
 		LOGGER.info("Starting Gateway Service Application...");
@@ -36,6 +39,38 @@ public class GatewayserviceApplication {
 				)
 				// Integration function end: Jenkins
  				// Integration function start: Auth
+				.route("authenticate_rate_limit_route", r -> r.path("/api/auth/authenticate")
+						.filters(f -> f
+								.requestRateLimiter(config -> config
+										.setRateLimiter(rateLimitConfig.loginRateLimiter())
+										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://auth-service:6001")
+				)
+				.route("register_rate_limit_route", r -> r.path("/api/auth/register")
+						.filters(f -> f
+								.requestRateLimiter(config -> config
+										.setRateLimiter(rateLimitConfig.registerRateLimiter())
+										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://auth-service:6001")
+				)
+				.route("send_password_reset_email_rate_limit_route", r -> r.path("/api/auth/user/send-password-reset-email")
+						.filters(f -> f
+								.requestRateLimiter(config -> config
+										.setRateLimiter(rateLimitConfig.passwordResetRateLimiter())
+										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://auth-service:6001")
+				)
+				.route("reset_password_rate_limit_route", r -> r.path("/api/auth/user/reset-password")
+						.filters(f -> f
+								.requestRateLimiter(config -> config
+										.setRateLimiter(rateLimitConfig.passwordResetRateLimiter())
+										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
+								.addResponseHeader("X-Powered-By", "Gateway Service"))
+						.uri("http://auth-service:6001")
+				)
 				.route(r -> r.path("/api/auth/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
