@@ -7,6 +7,9 @@ services:
     ports:
       - "8080:8080"
     container_name: gateway-service
+    labels:
+      com.msinit.log: "true"
+      com.msinit.service-name: "gatewayservice"
     environment:
       - SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME}
       - SERVER_PORT=${SERVER_PORT}
