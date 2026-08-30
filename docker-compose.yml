@@ -7,9 +7,19 @@ services:
     ports:
       - "8080:8080"
     container_name: gateway-service
+    labels:
+      com.msinit.log: "true"
+      com.msinit.service-name: "gatewayservice"
     environment:
       - SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME}
       - SERVER_PORT=${SERVER_PORT}
+      - JENKINS_SERVICE_URL=${JENKINS_SERVICE_URL} # Integration line: Jenkins
+      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL} # Integration line: Auth
+      - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL} # Integration line: Email
+      - FILE_SERVICE_URL=${FILE_SERVICE_URL} # Integration line: File
+      - VAULT_SERVICE_URL=${VAULT_SERVICE_URL} # Integration line: Vault
+      - TELEMETRY_SERVICE_URL=${TELEMETRY_SERVICE_URL} # Integration line: Telemetry
+      - REACT_SERVICE_URL=${REACT_SERVICE_URL} # Integration line: React
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
       - HOSTS=${HOSTS}
       - REDIS_HOST=${REDIS_HOST}
