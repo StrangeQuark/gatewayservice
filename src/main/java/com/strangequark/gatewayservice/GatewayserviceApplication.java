@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
@@ -19,6 +20,34 @@ public class GatewayserviceApplication {
     private HostsConfig hostsConfig;
 	@Autowired
 	private RateLimitConfig rateLimitConfig;
+	// Integration function start: Jenkins
+	@Value("${service.jenkins.url}")
+	private String jenkinsServiceUrl;
+	// Integration function end: Jenkins
+	// Integration function start: Auth
+	@Value("${service.auth.url}")
+	private String authServiceUrl;
+	// Integration function end: Auth
+	// Integration function start: Email
+	@Value("${service.email.url}")
+	private String emailServiceUrl;
+	// Integration function end: Email
+	// Integration function start: File
+	@Value("${service.file.url}")
+	private String fileServiceUrl;
+	// Integration function end: File
+	// Integration function start: Vault
+	@Value("${service.vault.url}")
+	private String vaultServiceUrl;
+	// Integration function end: Vault
+	// Integration function start: Telemetry
+	@Value("${service.telemetry.url}")
+	private String telemetryServiceUrl;
+	// Integration function end: Telemetry
+	// Integration function start: React
+	@Value("${service.react.url}")
+	private String reactServiceUrl;
+	// Integration function end: React
 
 	public static void main(String[] args) {
 		LOGGER.info("Starting Gateway Service Application...");
@@ -35,7 +64,7 @@ public class GatewayserviceApplication {
 						.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://jenkins-service:8080")
+						.uri(jenkinsServiceUrl)
 				)
 				// Integration function end: Jenkins
  				// Integration function start: Auth
@@ -45,7 +74,7 @@ public class GatewayserviceApplication {
 										.setRateLimiter(rateLimitConfig.loginRateLimiter())
 										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://auth-service:6001")
+						.uri(authServiceUrl)
 				)
 				.route("register_rate_limit_route", r -> r.path("/api/auth/register")
 						.filters(f -> f
@@ -53,7 +82,7 @@ public class GatewayserviceApplication {
 										.setRateLimiter(rateLimitConfig.registerRateLimiter())
 										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://auth-service:6001")
+						.uri(authServiceUrl)
 				)
 				.route("send_password_reset_email_rate_limit_route", r -> r.path("/api/auth/user/send-password-reset-email")
 						.filters(f -> f
@@ -61,7 +90,7 @@ public class GatewayserviceApplication {
 										.setRateLimiter(rateLimitConfig.passwordResetRateLimiter())
 										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://auth-service:6001")
+						.uri(authServiceUrl)
 				)
 				.route("reset_password_rate_limit_route", r -> r.path("/api/auth/user/reset-password")
 						.filters(f -> f
@@ -69,47 +98,47 @@ public class GatewayserviceApplication {
 										.setRateLimiter(rateLimitConfig.passwordResetRateLimiter())
 										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://auth-service:6001")
+						.uri(authServiceUrl)
 				)
 				.route(r -> r.path("/api/auth/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://auth-service:6001")
+						.uri(authServiceUrl)
 				)
                 // Integration function end: Auth
 				// Integration function start: Email
 				.route(r -> r.path("/api/email/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://email-service:6005")
+						.uri(emailServiceUrl)
 				)
                 // Integration function end: Email
 				// Integration function start: File
 				.route(r -> r.path("/api/file/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://file-service:6010")
+						.uri(fileServiceUrl)
 				)
                 // Integration function end: File
 				// Integration function start: Vault
 				.route(r -> r.path("/api/vault/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://vault-service:6020")
+						.uri(vaultServiceUrl)
 				)
                 // Integration function end: Vault
                 // Integration function start: Telemetry
                 .route(r -> r.path("/api/telemetry/**")
                         .filters(f -> f
                                 .addResponseHeader("X-Powered-By", "Gateway Service"))
-                        .uri("http://telemetry-service:6050")
+                        .uri(telemetryServiceUrl)
                 )
                 // Integration function end: Telemetry
 				// Integration function start: React
 				.route(r -> r.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri("http://react-service"))
+						.uri(reactServiceUrl))
                 // Integration function end: React
                 //Example route
 //                .route(r -> r.path("/**")
