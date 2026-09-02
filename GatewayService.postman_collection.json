@@ -63,11 +63,11 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n    \"username\": \"testUser\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -75,7 +75,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/auth/user/get-user-id?username=testUser",
+					"raw": "http://localhost:8080/api/auth/user/get-user-id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -86,12 +86,6 @@
 						"auth",
 						"user",
 						"get-user-id"
-					],
-					"query": [
-						{
-							"key": "username",
-							"value": "testUser"
-						}
 					]
 				}
 			},
@@ -113,11 +107,11 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n    \"query\": \"test@t.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,7 +119,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/auth/user/search-users?query=test@t.com",
+					"raw": "http://localhost:8080/api/auth/user/search-users",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -136,12 +130,6 @@
 						"auth",
 						"user",
 						"search-users"
-					],
-					"query": [
-						{
-							"key": "query",
-							"value": "test@t.com"
-						}
 					]
 				}
 			},
@@ -468,59 +456,59 @@
 			},
 			"response": []
 		},
-        {
-          "name": "Auth - Reset Password",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript",
-                "packages": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{ACCESS_TOKEN}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"test@t.com\",\r\n    \"newPassword\": \"newPassword\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/api/auth/user/reset-password",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "api",
-                "auth",
-                "user",
-                "reset-password"
-              ]
-            }
-          },
-          "response": []
-        },
+		{
+			"name": "Auth - Reset Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@t.com\",\r\n    \"newPassword\": \"newPassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/reset-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Auth - Add Authorizations To User",
 			"event": [
@@ -786,59 +774,59 @@
 			},
 			"response": []
 		},
-        {
-          "name": "Auth - Update role",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript",
-                "packages": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{ACCESS_TOKEN}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"newRole\": \"SUPER\",\r\n    \"username\": \"testUser\"\n    // \"email\": \"t@test.com\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/api/auth/user/update-role",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "api",
-                "auth",
-                "user",
-                "update-role"
-              ]
-            }
-          },
-          "response": []
-        },
+		{
+			"name": "Auth - Update role",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"newRole\": \"SUPER\",\r\n    \"username\": \"testUser\"\n    // \"email\": \"t@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/user/update-role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"user",
+						"update-role"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Auth - Send password reset email",
 			"event": [
@@ -933,14 +921,24 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [{"key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string"}]
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"name\": \"EMAIL_API_ACCESS\"\r\n}",
-					"options": {"raw": {"language": "json"}}
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": "http://localhost:8080/api/auth/authorization/create"
 			},
@@ -951,7 +949,13 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [{"key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string"}]
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "GET",
 				"header": [],
@@ -964,11 +968,26 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [{"key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string"}]
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8080/api/auth/authorization/delete/EMAIL_API_ACCESS"
+				"url": "http://localhost:8080/api/auth/authorization/delete/EMAIL_API_ACCESS",
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"EMAIL_API_ACCESS\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				}
 			},
 			"response": []
 		},
@@ -977,14 +996,24 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [{"key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string"}]
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"role\": \"SUPER\",\r\n    \"authorization\": \"EMAIL_API_ACCESS\"\r\n}",
-					"options": {"raw": {"language": "json"}}
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": "http://localhost:8080/api/auth/role-authorization/add"
 			},
@@ -995,11 +1024,26 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [{"key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string"}]
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
-				"url": "http://localhost:8080/api/auth/role-authorization/get?role=SUPER"
+				"url": "http://localhost:8080/api/auth/role-authorization/get?role=SUPER",
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": \"SUPER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				}
 			},
 			"response": []
 		},
@@ -1008,14 +1052,24 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [{"key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string"}]
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"role\": \"SUPER\",\r\n    \"authorization\": \"EMAIL_API_ACCESS\"\r\n}",
-					"options": {"raw": {"language": "json"}}
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": "http://localhost:8080/api/auth/role-authorization/remove"
 			},
@@ -1107,10 +1161,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/email/get-template-email?templateName=USER_REGISTER",
+					"raw": "http://localhost:8080/api/email/get-template-email",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1120,13 +1174,16 @@
 						"api",
 						"email",
 						"get-template-email"
-					],
-					"query": [
-						{
-							"key": "templateName",
-							"value": "USER_REGISTER"
-						}
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"templateName\": \"USER_REGISTER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1367,7 +1424,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/create-service/testService",
+					"raw": "http://localhost:8080/api/vault/create-service",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1376,9 +1433,17 @@
 					"path": [
 						"api",
 						"vault",
-						"create-service",
-						"testService"
+						"create-service"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1399,7 +1464,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/create-environment/testService/e3",
+					"raw": "http://localhost:8080/api/vault/create-environment",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1408,10 +1473,17 @@
 					"path": [
 						"api",
 						"vault",
-						"create-environment",
-						"testService",
-						"e3"
+						"create-environment"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1429,10 +1501,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-service/testService",
+					"raw": "http://localhost:8080/api/vault/get-service",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1441,9 +1513,17 @@
 					"path": [
 						"api",
 						"vault",
-						"get-service",
-						"testService"
+						"get-service"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1461,10 +1541,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-environments-by-service/testService",
+					"raw": "http://localhost:8080/api/vault/get-environments-by-service",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1473,9 +1553,17 @@
 					"path": [
 						"api",
 						"vault",
-						"get-environments-by-service",
-						"testService"
+						"get-environments-by-service"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1493,10 +1581,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-environment/testService/e3",
+					"raw": "http://localhost:8080/api/vault/get-environment",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1505,10 +1593,17 @@
 					"path": [
 						"api",
 						"vault",
-						"get-environment",
-						"testService",
-						"e3"
+						"get-environment"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1526,10 +1621,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-variables-by-service/testService",
+					"raw": "http://localhost:8080/api/vault/get-variables-by-service",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1538,9 +1633,17 @@
 					"path": [
 						"api",
 						"vault",
-						"get-variables-by-service",
-						"testService"
+						"get-variables-by-service"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1558,10 +1661,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-variables-by-environment/testService/e3",
+					"raw": "http://localhost:8080/api/vault/get-variables-by-environment",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1570,10 +1673,17 @@
 					"path": [
 						"api",
 						"vault",
-						"get-variables-by-environment",
-						"testService",
-						"e3"
+						"get-variables-by-environment"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1591,10 +1701,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-variable-by-name/testService/e3/abc2",
+					"raw": "http://localhost:8080/api/vault/get-variable-by-name",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1603,11 +1713,17 @@
 					"path": [
 						"api",
 						"vault",
-						"get-variable-by-name",
-						"testService",
-						"e3",
-						"abc2"
+						"get-variable-by-name"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\",\n    \"variableName\": \"abc2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1634,10 +1750,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"key\": \"abc2\",\n    \"value\": \"aa2\"\n}"
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\",\n    \"variable\": {\n        \"key\": \"abc2\",\n        \"value\": \"value\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/vault/add-variable/testService/e3",
+					"raw": "http://localhost:8080/api/vault/add-variable",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1646,9 +1767,7 @@
 					"path": [
 						"api",
 						"vault",
-						"add-variable",
-						"testService",
-						"e3"
+						"add-variable"
 					]
 				}
 			},
@@ -1676,10 +1795,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"key\": \"abc2\",\n    \"value\": \"abcdefg\"\n}"
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\",\n    \"variable\": {\n        \"key\": \"abc2\",\n        \"value\": \"value\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/vault/update-variable/testService/e3",
+					"raw": "http://localhost:8080/api/vault/update-variable",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1688,9 +1812,7 @@
 					"path": [
 						"api",
 						"vault",
-						"update-variable",
-						"testService",
-						"e3"
+						"update-variable"
 					]
 				}
 			},
@@ -1718,10 +1840,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n    {\n        \"key\": \"abc2\",\n        \"value\": \"abcdefg\"\n    }\n]"
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\",\n    \"variables\": [\n        {\n            \"key\": \"abc2\",\n            \"value\": \"value\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/vault/update-variables/testService/e3",
+					"raw": "http://localhost:8080/api/vault/update-variables",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1730,9 +1857,7 @@
 					"path": [
 						"api",
 						"vault",
-						"update-variables",
-						"testService",
-						"e3"
+						"update-variables"
 					]
 				}
 			},
@@ -1765,11 +1890,21 @@
 							"key": "file",
 							"type": "file",
 							"src": "/home/strangequark/Desktop/Microservices/authservice/.env"
+						},
+						{
+							"key": "serviceName",
+							"value": "testService",
+							"type": "text"
+						},
+						{
+							"key": "environmentName",
+							"value": "e3",
+							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/vault/add-env-file/testService/e3",
+					"raw": "http://localhost:8080/api/vault/add-env-file",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1778,9 +1913,7 @@
 					"path": [
 						"api",
 						"vault",
-						"add-env-file",
-						"testService",
-						"e3"
+						"add-env-file"
 					]
 				}
 			},
@@ -1799,10 +1932,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/download-env-file/testService/e3",
+					"raw": "http://localhost:8080/api/vault/download-env-file",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1811,10 +1944,17 @@
 					"path": [
 						"api",
 						"vault",
-						"download-env-file",
-						"testService",
-						"e3"
+						"download-env-file"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1835,7 +1975,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/delete-variable/testService/e3/abc2",
+					"raw": "http://localhost:8080/api/vault/delete-variable",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1844,11 +1984,17 @@
 					"path": [
 						"api",
 						"vault",
-						"delete-variable",
-						"testService",
-						"e3",
-						"abc2"
+						"delete-variable"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\",\n    \"variableName\": \"abc2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1869,7 +2015,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/delete-environment/testService/e3",
+					"raw": "http://localhost:8080/api/vault/delete-environment",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1878,10 +2024,17 @@
 					"path": [
 						"api",
 						"vault",
-						"delete-environment",
-						"testService",
-						"e3"
+						"delete-environment"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\",\n    \"environmentName\": \"e3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -1902,7 +2055,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/delete-service/testService",
+					"raw": "http://localhost:8080/api/vault/delete-service",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1911,9 +2064,17 @@
 					"path": [
 						"api",
 						"vault",
-						"delete-service",
-						"testService"
+						"delete-service"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2225,11 +2386,21 @@
 							"key": "file",
 							"type": "file",
 							"src": "/home/strangequark/Music/t.env"
+						},
+						{
+							"key": "serviceName",
+							"value": "testBootstrapService",
+							"type": "text"
+						},
+						{
+							"key": "environmentName",
+							"value": "testBootstrapEnv",
+							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/vault/bootstrap/add-env/testBootstrapService/testBootstrapEnv",
+					"raw": "http://localhost:8080/api/vault/bootstrap/add-env",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2239,9 +2410,7 @@
 						"api",
 						"vault",
 						"bootstrap",
-						"add-env",
-						"testBootstrapService",
-						"testBootstrapEnv"
+						"add-env"
 					]
 				}
 			},
@@ -2269,7 +2438,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/bootstrap/bootstrap-user/testBootstrapService",
+					"raw": "http://localhost:8080/api/vault/bootstrap/bootstrap-user",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2279,9 +2448,17 @@
 						"api",
 						"vault",
 						"bootstrap",
-						"bootstrap-user",
-						"testBootstrapService"
+						"bootstrap-user"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testBootstrapService\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2292,7 +2469,7 @@
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "X-CICD-TOKEN",
@@ -2301,7 +2478,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/vault/cicd/testBootstrapService/testBootstrapEnv",
+					"raw": "http://localhost:8080/api/vault/cicd",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2310,10 +2487,17 @@
 					"path": [
 						"api",
 						"vault",
-						"cicd",
-						"testBootstrapService",
-						"testBootstrapEnv"
+						"cicd"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testBootstrapService\",\n    \"environmentName\": \"testBootstrapEnv\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2352,10 +2536,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/get-all/testCollection",
+					"raw": "http://localhost:8080/api/file/get-all",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2364,9 +2548,17 @@
 					"path": [
 						"api",
 						"file",
-						"get-all",
-						"testCollection"
+						"get-all"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2384,10 +2576,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/download/testCollection/test.txt",
+					"raw": "http://localhost:8080/api/file/download",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2396,10 +2588,17 @@
 					"path": [
 						"api",
 						"file",
-						"download",
-						"testCollection",
-						"test.txt"
+						"download"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\",\n    \"fileName\": \"test.txt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2417,10 +2616,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/downloadAll/testCollection",
+					"raw": "http://localhost:8080/api/file/downloadAll",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2429,9 +2628,17 @@
 					"path": [
 						"api",
 						"file",
-						"downloadAll",
-						"testCollection"
+						"downloadAll"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2452,7 +2659,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/stream/testCollection/v1.webm",
+					"raw": "http://localhost:8080/api/file/stream?collectionName=testCollection&fileName=v1.webm",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2461,9 +2668,17 @@
 					"path": [
 						"api",
 						"file",
-						"stream",
-						"testCollection",
-						"v1.webm"
+						"stream"
+					],
+					"query": [
+						{
+							"key": "collectionName",
+							"value": "testCollection"
+						},
+						{
+							"key": "fileName",
+							"value": "v1.webm"
+						}
 					]
 				}
 			},
@@ -2491,11 +2706,16 @@
 							"key": "file",
 							"type": "file",
 							"src": "/home/strangequark/Desktop/Game helpers/england2025.txt"
+						},
+						{
+							"key": "collectionName",
+							"value": "testCollection",
+							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/file/upload/testCollection",
+					"raw": "http://localhost:8080/api/file/upload",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2504,8 +2724,7 @@
 					"path": [
 						"api",
 						"file",
-						"upload",
-						"testCollection"
+						"upload"
 					]
 				}
 			},
@@ -2527,7 +2746,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/new-collection/testCollection",
+					"raw": "http://localhost:8080/api/file/new-collection",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2536,9 +2755,17 @@
 					"path": [
 						"api",
 						"file",
-						"new-collection",
-						"testCollection"
+						"new-collection"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2590,7 +2817,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/delete/testCollection/england2025.txt",
+					"raw": "http://localhost:8080/api/file/delete",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2599,10 +2826,17 @@
 					"path": [
 						"api",
 						"file",
-						"delete",
-						"testCollection",
-						"england2025.txt"
+						"delete"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\",\n    \"fileName\": \"england2025.txt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2623,7 +2857,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/delete-collection/testCollection",
+					"raw": "http://localhost:8080/api/file/delete-collection",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2632,9 +2866,17 @@
 					"path": [
 						"api",
 						"file",
-						"delete-collection",
-						"testCollection"
+						"delete-collection"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2652,10 +2894,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/get-current-user-role/testCollection",
+					"raw": "http://localhost:8080/api/file/get-current-user-role",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2664,9 +2906,17 @@
 					"path": [
 						"api",
 						"file",
-						"get-current-user-role",
-						"testCollection"
+						"get-current-user-role"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
@@ -2684,10 +2934,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/file/get-users-by-collection/testCollection",
+					"raw": "http://localhost:8080/api/file/get-users-by-collection",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2696,9 +2946,17 @@
 					"path": [
 						"api",
 						"file",
-						"get-users-by-collection",
-						"testCollection"
+						"get-users-by-collection"
 					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectionName\": \"testCollection\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				}
 			},
 			"response": []
