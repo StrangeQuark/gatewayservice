@@ -7,6 +7,13 @@ services:
     ports:
       - "8080:8080"
     container_name: gateway-service
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
     labels:
       com.msinit.log: "true"
       com.msinit.service-name: "gatewayservice"
@@ -52,7 +59,7 @@ services:
       gateway-redis:
         condition: service_started
   gateway-redis:
-    image: redis:7.4-alpine
+    image: redis:7.4-alpine@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     container_name: gateway-redis
     restart: unless-stopped
