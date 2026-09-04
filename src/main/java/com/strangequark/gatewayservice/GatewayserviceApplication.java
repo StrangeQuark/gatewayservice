@@ -68,40 +68,16 @@ public class GatewayserviceApplication {
 				)
 				// Integration function end: Jenkins
  				// Integration function start: Auth
-				.route("authenticate_rate_limit_route", r -> r.path("/api/auth/authenticate")
+				.route(r -> r.path("/api/auth/health")
 						.filters(f -> f
-								.requestRateLimiter(config -> config
-										.setRateLimiter(rateLimitConfig.loginRateLimiter())
-										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
-								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri(authServiceUrl)
-				)
-				.route("register_rate_limit_route", r -> r.path("/api/auth/register")
-						.filters(f -> f
-								.requestRateLimiter(config -> config
-										.setRateLimiter(rateLimitConfig.registerRateLimiter())
-										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
-								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri(authServiceUrl)
-				)
-				.route("send_password_reset_email_rate_limit_route", r -> r.path("/api/auth/user/send-password-reset-email")
-						.filters(f -> f
-								.requestRateLimiter(config -> config
-										.setRateLimiter(rateLimitConfig.passwordResetRateLimiter())
-										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
-								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri(authServiceUrl)
-				)
-				.route("reset_password_rate_limit_route", r -> r.path("/api/auth/user/reset-password")
-						.filters(f -> f
-								.requestRateLimiter(config -> config
-										.setRateLimiter(rateLimitConfig.passwordResetRateLimiter())
-										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(authServiceUrl)
 				)
 				.route(r -> r.path("/api/auth/**")
 						.filters(f -> f
+								.requestRateLimiter(config -> config
+										.setRateLimiter(rateLimitConfig.authRateLimiter())
+										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(authServiceUrl)
 				)
