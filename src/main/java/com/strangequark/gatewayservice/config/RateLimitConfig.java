@@ -10,18 +10,10 @@ import reactor.core.publisher.Mono;
 
 @Configuration
 public class RateLimitConfig {
-    @Value("${rate-limit.login.max-requests}")
-    private int loginMaxRequests;
-    @Value("${rate-limit.login.window-minutes}")
-    private int loginWindowMinutes;
-    @Value("${rate-limit.register.max-requests}")
-    private int registerMaxRequests;
-    @Value("${rate-limit.register.window-minutes}")
-    private int registerWindowMinutes;
-    @Value("${rate-limit.password-reset.max-requests}")
-    private int passwordResetMaxRequests;
-    @Value("${rate-limit.password-reset.window-minutes}")
-    private int passwordResetWindowMinutes;
+    @Value("${rate-limit.auth.replenish-rate}")
+    private int authReplenishRate;
+    @Value("${rate-limit.auth.burst-capacity}")
+    private int authBurstCapacity;
 
     @Bean
     public KeyResolver clientIpKeyResolver() {
@@ -35,23 +27,7 @@ public class RateLimitConfig {
 
     @Bean
     @Primary
-    public RedisRateLimiter loginRateLimiter() {
-        return createRateLimiter(loginMaxRequests, loginWindowMinutes);
-    }
-
-    @Bean
-    public RedisRateLimiter registerRateLimiter() {
-        return createRateLimiter(registerMaxRequests, registerWindowMinutes);
-    }
-
-    @Bean
-    public RedisRateLimiter passwordResetRateLimiter() {
-        return createRateLimiter(passwordResetMaxRequests, passwordResetWindowMinutes);
-    }
-
-    private RedisRateLimiter createRateLimiter(int maxRequests, int windowMinutes) {
-        int windowSeconds = windowMinutes * 60;
-
-        return new RedisRateLimiter(1, windowSeconds, windowSeconds / maxRequests);
+    public RedisRateLimiter authRateLimiter() {
+        return new RedisRateLimiter(authReplenishRate, authBurstCapacity, 1);
     }
 }

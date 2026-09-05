@@ -7,6 +7,13 @@ services:
     ports:
       - "8080:8080"
     container_name: gateway-service
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
     labels:
       com.msinit.log: "true"
       com.msinit.service-name: "gatewayservice"
@@ -27,12 +34,8 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_CONNECT_TIMEOUT=${REDIS_CONNECT_TIMEOUT}
       - REDIS_TIMEOUT=${REDIS_TIMEOUT}
-      - LOGIN_RATE_LIMIT_MAX_REQUESTS=${LOGIN_RATE_LIMIT_MAX_REQUESTS}
-      - LOGIN_RATE_LIMIT_WINDOW_MINUTES=${LOGIN_RATE_LIMIT_WINDOW_MINUTES}
-      - REGISTER_RATE_LIMIT_MAX_REQUESTS=${REGISTER_RATE_LIMIT_MAX_REQUESTS}
-      - REGISTER_RATE_LIMIT_WINDOW_MINUTES=${REGISTER_RATE_LIMIT_WINDOW_MINUTES}
-      - PASSWORD_RESET_RATE_LIMIT_MAX_REQUESTS=${PASSWORD_RESET_RATE_LIMIT_MAX_REQUESTS}
-      - PASSWORD_RESET_RATE_LIMIT_WINDOW_MINUTES=${PASSWORD_RESET_RATE_LIMIT_WINDOW_MINUTES}
+      - AUTH_GATEWAY_RATE_LIMIT_REPLENISH_RATE=${AUTH_GATEWAY_RATE_LIMIT_REPLENISH_RATE}
+      - AUTH_GATEWAY_RATE_LIMIT_BURST_CAPACITY=${AUTH_GATEWAY_RATE_LIMIT_BURST_CAPACITY}
 #      - SERVER_SSL_ENABLED=${SERVER_SSL_ENABLED} # Uncomment for prod deployments
 #      - SERVER_SSL_KEY_STORE=${SERVER_SSL_KEY_STORE} # Uncomment for prod deployments
 #      - SERVER_SSL_KEY_STORE_PASSWORD=${SERVER_SSL_KEY_STORE_PASSWORD} # Uncomment for prod deployments
@@ -43,7 +46,7 @@ services:
         limits:
           memory: 512M
     healthcheck:
-      test: [ "CMD-SHELL", "pgrep -f 'gatewayservice.jar' > /dev/null || exit 1" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/api/gateway/health" ]
       interval: 10s
       timeout: 5s
       retries: 20
@@ -52,7 +55,7 @@ services:
       gateway-redis:
         condition: service_started
   gateway-redis:
-    image: redis:7.4-alpine
+    image: redis:7.4-alpine@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     container_name: gateway-redis
     restart: unless-stopped
