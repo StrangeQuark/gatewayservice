@@ -20,34 +20,40 @@ public class GatewayserviceApplication {
     private HostsConfig hostsConfig;
 	@Autowired
 	private RateLimitConfig rateLimitConfig;
-	// Integration function start: Jenkins
 	@Value("${service.jenkins.url}")
 	private String jenkinsServiceUrl;
-	// Integration function end: Jenkins
-	// Integration function start: Auth
+	@Value("${jenkinsservice.integration}")
+	private boolean jenkinsserviceIntegration;
+
 	@Value("${service.auth.url}")
 	private String authServiceUrl;
-	// Integration function end: Auth
-	// Integration function start: Email
+	@Value("${authservice.integration}")
+	private boolean authserviceIntegration;
+
 	@Value("${service.email.url}")
 	private String emailServiceUrl;
-	// Integration function end: Email
-	// Integration function start: File
+	@Value("${emailservice.integration}")
+	private boolean emailserviceIntegration;
+
 	@Value("${service.file.url}")
 	private String fileServiceUrl;
-	// Integration function end: File
-	// Integration function start: Vault
+	@Value("${fileservice.integration}")
+	private boolean fileserviceIntegration;
+
 	@Value("${service.vault.url}")
 	private String vaultServiceUrl;
-	// Integration function end: Vault
-	// Integration function start: Telemetry
+	@Value("${vaultservice.integration}")
+	private boolean vaultserviceIntegration;
+
 	@Value("${service.telemetry.url}")
 	private String telemetryServiceUrl;
-	// Integration function end: Telemetry
-	// Integration function start: React
+	@Value("${telemetryservice.integration}")
+	private boolean telemetryserviceIntegration;
+
 	@Value("${service.react.url}")
 	private String reactServiceUrl;
-	// Integration function end: React
+	@Value("${reactservice.integration}")
+	private boolean reactserviceIntegration;
 
 	public static void main(String[] args) {
 		LOGGER.info("Starting Gateway Service Application...");
@@ -57,70 +63,70 @@ public class GatewayserviceApplication {
 
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-		return builder.routes()
-				// Integration function start: Jenkins
-				.route("jenkins_route", r -> r.host(hostsConfig.getHosts().get("jenkins"))
+		RouteLocatorBuilder.Builder routes = builder.routes();
+
+		if(jenkinsserviceIntegration)
+			routes.route("jenkins_route", r -> r.host(hostsConfig.getHosts().get("jenkins"))
 						.and()
 						.path("/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(jenkinsServiceUrl)
-				)
-				// Integration function end: Jenkins
- 				// Integration function start: Auth
-				.route(r -> r.path("/api/auth/health")
+			);
+
+		if(authserviceIntegration) {
+			routes.route(r -> r.path("/api/auth/health")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(authServiceUrl)
-				)
-				.route(r -> r.path("/api/auth/**")
+			);
+			routes.route(r -> r.path("/api/auth/**")
 						.filters(f -> f
 								.requestRateLimiter(config -> config
 										.setRateLimiter(rateLimitConfig.authRateLimiter())
 										.setKeyResolver(rateLimitConfig.clientIpKeyResolver()))
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(authServiceUrl)
-				)
-                // Integration function end: Auth
-				// Integration function start: Email
-				.route(r -> r.path("/api/email/**")
+			);
+		}
+
+		if(emailserviceIntegration)
+			routes.route(r -> r.path("/api/email/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(emailServiceUrl)
-				)
-                // Integration function end: Email
-				// Integration function start: File
-				.route(r -> r.path("/api/file/**")
+			);
+
+		if(fileserviceIntegration)
+			routes.route(r -> r.path("/api/file/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(fileServiceUrl)
-				)
-                // Integration function end: File
-				// Integration function start: Vault
-				.route(r -> r.path("/api/vault/**")
+			);
+
+		if(vaultserviceIntegration)
+			routes.route(r -> r.path("/api/vault/**")
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
 						.uri(vaultServiceUrl)
-				)
-                // Integration function end: Vault
-                // Integration function start: Telemetry
-                .route(r -> r.path("/api/telemetry/**")
+			);
+
+		if(telemetryserviceIntegration)
+			routes.route(r -> r.path("/api/telemetry/**")
                         .filters(f -> f
                                 .addResponseHeader("X-Powered-By", "Gateway Service"))
                         .uri(telemetryServiceUrl)
-                )
-                // Integration function end: Telemetry
-				// Integration function start: React
-				.route(r -> r.path("/**")
+			);
+
+		if(reactserviceIntegration)
+			routes.route(r -> r.path("/**")
+						.and()
+						.not(p -> p.path("/api/**"))
 						.filters(f -> f
 								.addResponseHeader("X-Powered-By", "Gateway Service"))
-						.uri(reactServiceUrl))
-                // Integration function end: React
-                //Example route
-//                .route(r -> r.path("/**")
-//                        .filters(f -> f
-//                                .addResponseHeader("X-Powered-By", "Gateway Service"))
-//                        .uri("http://your-service"))
-				.build();
+						.uri(reactServiceUrl)
+			);
+
+		return routes.build();
 	}
 }

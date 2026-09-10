@@ -32,13 +32,13 @@ public class GatewayRouteTest {
 
     @DynamicPropertySource
     static void serviceUrls(DynamicPropertyRegistry registry) {
-        registry.add("service.jenkins.url", GatewayRouteTest::getMockServerUrl); // Integration line: Jenkins
-        registry.add("service.auth.url", GatewayRouteTest::getMockServerUrl); // Integration line: Auth
-        registry.add("service.email.url", GatewayRouteTest::getMockServerUrl); // Integration line: Email
-        registry.add("service.file.url", GatewayRouteTest::getMockServerUrl); // Integration line: File
-        registry.add("service.vault.url", GatewayRouteTest::getMockServerUrl); // Integration line: Vault
-        registry.add("service.telemetry.url", GatewayRouteTest::getMockServerUrl); // Integration line: Telemetry
-        registry.add("service.react.url", GatewayRouteTest::getMockServerUrl); // Integration line: React
+        registry.add("service.jenkins.url", GatewayRouteTest::getMockServerUrl);
+        registry.add("service.auth.url", GatewayRouteTest::getMockServerUrl);
+        registry.add("service.email.url", GatewayRouteTest::getMockServerUrl);
+        registry.add("service.file.url", GatewayRouteTest::getMockServerUrl);
+        registry.add("service.vault.url", GatewayRouteTest::getMockServerUrl);
+        registry.add("service.telemetry.url", GatewayRouteTest::getMockServerUrl);
+        registry.add("service.react.url", GatewayRouteTest::getMockServerUrl);
     }
 
     @AfterAll
@@ -46,48 +46,40 @@ public class GatewayRouteTest {
         mockServer.disposeNow();
     }
 
-    // Integration function start: Jenkins
     @Test
     void testJenkinsRouteForwarding() {
         testRoute("/", "jenkins.test");
     }
-    // Integration function end: Jenkins
-    // Integration function start: Auth
+
     @Test
     void testAuthRouteForwarding() {
         testRoute("/api/auth/health", null);
     }
-    // Integration function end: Auth
-    // Integration function start: Email
+
     @Test
     void testEmailRouteForwarding() {
         testRoute("/api/email/health", null);
     }
-    // Integration function end: Email
-    // Integration function start: File
+
     @Test
     void testFileRouteForwarding() {
         testRoute("/api/file/health", null);
     }
-    // Integration function end: File
-    // Integration function start: Vault
+
     @Test
     void testVaultRouteForwarding() {
         testRoute("/api/vault/health", null);
     }
-    // Integration function end: Vault
-    // Integration function start: Telemetry
+
     @Test
     void testTelemetryRouteForwarding() {
         testRoute("/api/telemetry/health", null);
     }
-    // Integration function end: Telemetry
-    // Integration function start: React
+
     @Test
     void testReactRouteForwarding() {
         testRoute("/", null);
     }
-    // Integration function end: React
 
     private static String getMockServerUrl() {
         return "http://localhost:" + mockServer.port();
