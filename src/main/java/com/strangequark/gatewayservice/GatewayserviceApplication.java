@@ -50,6 +50,11 @@ public class GatewayserviceApplication {
 	@Value("${telemetryservice.integration}")
 	private boolean telemetryserviceIntegration;
 
+	@Value("${service.vpn.url}")
+	private String vpnServiceUrl;
+	@Value("${vpnservice.integration}")
+	private boolean vpnserviceIntegration;
+
 	@Value("${service.react.url}")
 	private String reactServiceUrl;
 	@Value("${reactservice.integration}")
@@ -116,6 +121,13 @@ public class GatewayserviceApplication {
                         .filters(f -> f
                                 .addResponseHeader("X-Powered-By", "Gateway Service"))
                         .uri(telemetryServiceUrl)
+			);
+
+		if(vpnserviceIntegration)
+			routes.route(r -> r.path("/api/vpn/**")
+					.filters(f -> f
+							.addResponseHeader("X-Powered-By", "Gateway Service"))
+					.uri(vpnServiceUrl)
 			);
 
 		if(reactserviceIntegration)
