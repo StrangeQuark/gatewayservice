@@ -38,6 +38,7 @@ public class GatewayRouteTest {
         registry.add("service.file.url", GatewayRouteTest::getMockServerUrl);
         registry.add("service.vault.url", GatewayRouteTest::getMockServerUrl);
         registry.add("service.telemetry.url", GatewayRouteTest::getMockServerUrl);
+        registry.add("service.vpn.url", GatewayRouteTest::getMockServerUrl);
         registry.add("service.react.url", GatewayRouteTest::getMockServerUrl);
     }
 
@@ -74,6 +75,11 @@ public class GatewayRouteTest {
     @Test
     void testTelemetryRouteForwarding() {
         testRoute("/api/telemetry/health", null);
+    }
+
+    @Test
+    void testVpnRouteForwarding() {
+        testRoute("/api/vpn/health", null);
     }
 
     @Test
