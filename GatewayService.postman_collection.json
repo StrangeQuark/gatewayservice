@@ -5,7 +5,20 @@
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29355577"
 	},
+	"variable": [
+		{ "key": "DEVICE_ID", "value": "" },
+		{ "key": "USER_ID", "value": "" }
+	],
 	"item": [
+		{
+			"name": "Gateway - Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/gateway/health"
+			},
+			"response": []
+		},
 		{
 			"name": "Auth - Healthcheck",
 			"protocolProfileBehavior": {
@@ -88,6 +101,15 @@
 						"get-user-id"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Get Super User ID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/api/auth/user/get-super-user-id"
 			},
 			"response": []
 		},
@@ -331,6 +353,19 @@
 					"options": { "raw": { "language": "json" } }
 				},
 				"url": "http://localhost:8080/api/auth/invitation/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Delete All Invitations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/auth/invitation/delete-all"
 			},
 			"response": []
 		},
@@ -1209,6 +1244,19 @@
 			"response": []
 		},
 		{
+			"name": "Email - Get All Template Emails",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }]
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/email/get-all-template-emails"
+			},
+			"response": []
+		},
+		{
 			"name": "Email - Send Template Email",
 			"request": {
 				"auth": {
@@ -1285,6 +1333,42 @@
 						"create-template-email"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Update Template",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"templateName\": \"TEST_TEMPLATE\",\n    \"subject\": \"Updated test subject\",\n    \"body\": \"Updated test body\"\n}",
+					"options": { "raw": { "language": "json" } }
+				},
+				"url": "http://localhost:8080/api/email/update-template-email"
+			},
+			"response": []
+		},
+		{
+			"name": "Email - Delete Template",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"templateName\": \"TEST_TEMPLATE\"\n}",
+					"options": { "raw": { "language": "json" } }
+				},
+				"url": "http://localhost:8080/api/email/delete-template-email"
 			},
 			"response": []
 		},
@@ -2143,10 +2227,15 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\"\n}",
+					"options": { "raw": { "language": "json" } }
+				},
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-users-by-service/testService",
+					"raw": "http://localhost:8080/api/vault/get-users-by-service",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2155,8 +2244,7 @@
 					"path": [
 						"api",
 						"vault",
-						"get-users-by-service",
-						"testService"
+						"get-users-by-service"
 					]
 				}
 			},
@@ -2206,10 +2294,15 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serviceName\": \"testService\"\n}",
+					"options": { "raw": { "language": "json" } }
+				},
 				"url": {
-					"raw": "http://localhost:8080/api/vault/get-current-user-role/testService",
+					"raw": "http://localhost:8080/api/vault/get-current-user-role",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2218,8 +2311,7 @@
 					"path": [
 						"api",
 						"vault",
-						"get-current-user-role",
-						"testService"
+						"get-current-user-role"
 					]
 				}
 			},
@@ -3339,6 +3431,157 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "VPN - Healthcheck",
+			"request": {
+				"auth": { "type": "noauth" },
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/vpn/health"
+			},
+			"response": []
+		},
+		{
+			"name": "VPN - Standalone mode",
+			"item": [
+				{
+					"name": "Create device",
+					"event": [{
+						"listen": "test",
+						"script": {
+							"type": "text/javascript",
+							"exec": [
+								"if(pm.response.code === 200) {",
+								"    const response = pm.response.json();",
+								"    pm.collectionVariables.set('DEVICE_ID', response.id);",
+								"    pm.visualizer.set(`<div style=\"font-family: Arial; max-width: 420px;\"><h2>WireGuard device created</h2><p><strong>Device:</strong> {{deviceName}}</p><p><strong>VPN address:</strong> {{vpnAddress}}</p><img src=\"{{qrCode}}\" alt=\"WireGuard configuration QR code\" style=\"width: 350px; height: 350px; image-rendering: pixelated;\" /><p>Scan this QR code once in the WireGuard mobile app.</p></div>`, response);",
+								"}"
+							]
+						}
+					}],
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n    \"deviceName\": \"local-laptop\"\n}", "options": { "raw": { "language": "json" } } },
+						"url": "http://localhost:8080/api/vpn/create-device"
+					},
+					"response": []
+				},
+				{
+					"name": "Get devices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/vpn/get-devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Rotate device",
+					"event": [{
+						"listen": "test",
+						"script": {
+							"type": "text/javascript",
+							"exec": [
+								"if(pm.response.code === 200) {",
+								"    const response = pm.response.json();",
+								"    pm.collectionVariables.set('DEVICE_ID', response.id);",
+								"    pm.visualizer.set(`<div style=\"font-family: Arial; max-width: 420px;\"><h2>WireGuard device rotated</h2><p><strong>Device:</strong> {{deviceName}}</p><p><strong>VPN address:</strong> {{vpnAddress}}</p><img src=\"{{qrCode}}\" alt=\"WireGuard configuration QR code\" style=\"width: 350px; height: 350px; image-rendering: pixelated;\" /><p>Scan this replacement QR code in the WireGuard mobile app.</p></div>`, response);",
+								"}"
+							]
+						}
+					}],
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n    \"deviceId\": \"{{DEVICE_ID}}\"\n}", "options": { "raw": { "language": "json" } } },
+						"url": "http://localhost:8080/api/vpn/rotate-device"
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke device",
+					"request": {
+						"method": "DELETE",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n    \"deviceId\": \"{{DEVICE_ID}}\"\n}", "options": { "raw": { "language": "json" } } },
+						"url": "http://localhost:8080/api/vpn/revoke-device"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "VPN - AuthService integration",
+			"item": [
+				{
+					"name": "Create device",
+					"event": [{
+						"listen": "test",
+						"script": {
+							"type": "text/javascript",
+							"exec": [
+								"if(pm.response.code === 200) {",
+								"    const response = pm.response.json();",
+								"    pm.collectionVariables.set('DEVICE_ID', response.id);",
+								"    pm.visualizer.set(`<div style=\"font-family: Arial; max-width: 420px;\"><h2>WireGuard device created</h2><p><strong>Device:</strong> {{deviceName}}</p><p><strong>VPN address:</strong> {{vpnAddress}}</p><img src=\"{{qrCode}}\" alt=\"WireGuard configuration QR code\" style=\"width: 350px; height: 350px; image-rendering: pixelated;\" /><p>Scan this QR code once in the WireGuard mobile app.</p></div>`, response);",
+								"}"
+							]
+						}
+					}],
+					"request": {
+						"auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }] },
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n    \"deviceName\": \"work-laptop\"\n}", "options": { "raw": { "language": "json" } } },
+						"url": "http://localhost:8080/api/vpn/create-device"
+					},
+					"response": []
+				},
+				{
+					"name": "Get my devices",
+					"request": {
+						"auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }] },
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/vpn/get-devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all devices (VPN management)",
+					"request": {
+						"auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }] },
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/vpn/get-all-devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke user devices (VPN management)",
+					"request": {
+						"auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }] },
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n    \"userId\": \"{{USER_ID}}\"\n}", "options": { "raw": { "language": "json" } } },
+						"url": "http://localhost:8080/api/vpn/revoke-user-devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke device (VPN management)",
+					"request": {
+						"auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{ACCESS_TOKEN}}", "type": "string" }] },
+						"method": "DELETE",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n    \"deviceId\": \"{{DEVICE_ID}}\"\n}", "options": { "raw": { "language": "json" } } },
+						"url": "http://localhost:8080/api/vpn/admin/revoke-device"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
