@@ -1,6 +1,7 @@
 package com.strangequark.gatewayservice.routetests;
 
 import org.junit.jupiter.api.AfterAll;
+import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import reactor.netty.http.server.HttpServer;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
+@AutoConfigureObservability
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
 public class GatewayRouteTest {
@@ -24,6 +26,7 @@ public class GatewayRouteTest {
             .port(0)
             .handle((request, response) -> response
                     .header("X-Test-Route", request.uri())
+                    .header("X-Test-Traceparent", request.requestHeaders().get("traceparent", "missing"))
                     .sendString(Mono.just(request.uri())))
             .bindNow();
 
@@ -85,6 +88,21 @@ public class GatewayRouteTest {
     @Test
     void testReactRouteForwarding() {
         testRoute("/", null);
+    }
+
+    @Test
+    void testTraceContinuesThroughGateway() {
+        String traceId = "4bf92f3577b34da6a3ce929d0e0e4736";
+        webTestClient.get().uri("/api/auth/health")
+                .header("traceparent", "00-" + traceId + "-00f067aa0ba902b7-01")
+                .header(HttpHeaders.ORIGIN, "http://localhost:6080")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().valueEquals("X-Trace-ID", traceId)
+                .expectHeader().value("X-Test-Traceparent",
+                        value -> org.junit.jupiter.api.Assertions.assertTrue(value.startsWith("00-" + traceId + "-")))
+                .expectHeader().value(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,
+                        value -> org.junit.jupiter.api.Assertions.assertTrue(value.contains("X-Trace-ID")));
     }
 
     private static String getMockServerUrl() {

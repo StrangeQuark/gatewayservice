@@ -17,6 +17,8 @@ services:
     labels:
       com.msinit.log: "true"
       com.msinit.service-name: "gatewayservice"
+    logging:
+      driver: json-file
     environment:
       - SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME}
       - SERVER_PORT=${SERVER_PORT}
